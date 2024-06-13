@@ -1,7 +1,10 @@
-console.log("hello");
+console.log("Let's start Tic Tac Toe Game!");
 
 let player = 'X';
 function play(evt) {
+    const targetSquare = evt.target;
+    targetSquare.innerText = player;
+
     // Switch turns (ex.: if it was X's turn, it should be O's turn next)
     if (player === 'X') {
         player = 'O';
@@ -9,11 +12,16 @@ function play(evt) {
         player = 'X';
     }
     // player = player === 'X' ? 'O' : 'X';
+
     const playerSpan = document.querySelector('#current-player');
     playerSpan.innerText = player;
 
-    const targetSquare = evt.target;
-    targetSquare.innerText = player;
+    const winner = calculateWinner();
+    if (winner) {
+        alert(`There is a winner - the player ${winner} is the winner!!!`);
+    } else if (isBoardFull()) {
+        alert('Game is a tie!');
+    } 
 }
 
 const squares = document.querySelectorAll('.square');
@@ -56,4 +64,13 @@ function calculateWinner() {
 
   // If we've searched all the lines, then the function returns undefined.
   return undefined;
+}
+
+function isBoardFull() {
+    for (const square of squares) {
+        if (square.innerText === '') {
+            return false;
+        }
+    }
+    return true;
 }
